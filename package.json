@@ -1,0 +1,42 @@
+{
+  "name": "onchain-contract-lab",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.6.3",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json}\" pnpm-workspace.yaml",
+    "format:check": "prettier --check \"**/*.{js,mjs,ts,tsx,json}\" pnpm-workspace.yaml",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:e2e": "playwright test",
+    "typecheck": "turbo run typecheck",
+    "registry:validate": "tsx packages/contract-registry/scripts/validate.ts",
+    "contracts:fmt": "forge fmt --root contracts/airdrop --check",
+    "contracts:build": "forge build --root contracts/airdrop",
+    "contracts:test": "forge test --root contracts/airdrop",
+    "contracts:reward-fmt": "forge fmt --root contracts/reward-pool --check",
+    "contracts:reward-build": "forge build --root contracts/reward-pool",
+    "contracts:reward-test": "forge test --root contracts/reward-pool",
+    "contracts:vault-fmt": "forge fmt --root contracts/vault-lab --check",
+    "contracts:vault-build": "forge build --root contracts/vault-lab",
+    "contracts:vault-test": "forge test --root contracts/vault-lab",
+    "contracts:treasury-fmt": "forge fmt --root contracts/treasury-lab --check",
+    "contracts:treasury-build": "forge build --root contracts/treasury-lab",
+    "contracts:treasury-test": "forge test --root contracts/treasury-lab",
+    "contracts:treasury-layout": "forge inspect TreasuryV1 storage-layout --root contracts/treasury-lab && forge inspect TreasuryV2 storage-layout --root contracts/treasury-lab"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

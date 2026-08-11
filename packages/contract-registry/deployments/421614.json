@@ -1,0 +1,43 @@
+[
+  {
+    "chainId": 421614,
+    "lab": "airdrop",
+    "contractName": "MerkleAirdrop",
+    "address": "0x30ca98d4fcd46c8da135236a052c54dddfbb34b2",
+    "deploymentBlock": 289003901,
+    "transactionHash": "0x2e33bdeda365e010b67f34828de5899911521c2c258b337f1e6592996be49b22",
+    "version": "1.0.0",
+    "verified": true
+  },
+  {
+    "chainId": 421614,
+    "lab": "reward-pool",
+    "contractName": "StakingRewards",
+    "address": "0x4821a93178accbc632e69bf1a53d569147d95033",
+    "deploymentBlock": 289004308,
+    "transactionHash": "0x8fe03dd7537dd6070daa86d5d70520fe59ab045a468a9a8384c1df9e3a67f90c",
+    "version": "1.0.0",
+    "verified": true
+  },
+  {
+    "chainId": 421614,
+    "lab": "vault",
+    "contractName": "BasicVault",
+    "address": "0x84e1d9a19fe4f2f7694d6293175cbe6da5af0550",
+    "deploymentBlock": 289004417,
+    "transactionHash": "0x09b0646b2328714fe072de6d4582091c2408eaf0cc6ab50dddd4018798b4f22e",
+    "version": "1.0.0",
+    "verified": true
+  },
+  {
+    "chainId": 421614,
+    "lab": "upgradeable",
+    "contractName": "TreasuryProxy",
+    "address": "0x5af5083a2e144ca0527708266ba930e65d16cc25",
+    "deploymentBlock": 289004514,
+    "transactionHash": "0x8bf1e915d2b8e83eee90539af31f2eefd05f64391140f18df15f68bb66b3b9f6",
+    "version": "1.0.0",
+    "implementationAddress": "0x8e638bb28260fb7192403efbf1f9f9e20a3ae54f",
+    "verified": true
+  }
+]

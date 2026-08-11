@@ -1,0 +1,23 @@
+{
+  "name": "@onchain-contract-lab/contract-registry",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./deployments/421614.json": {
+      "default": "./deployments/421614.json"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint src scripts --max-warnings=0",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit"
+  },
+  "dependencies": {
+    "@onchain-contract-lab/chain-config": "workspace:*"
+  }
+}
