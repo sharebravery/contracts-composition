@@ -22,7 +22,7 @@ export const labCatalog: readonly LabEntry[] = [
     description:
       'A single-round ERC-20 distribution with replay-safe signatures and expiry recovery.',
     phase: 'Phase 1',
-    status: 'Registry pending',
+    status: 'Live',
     accent: 'cyan',
   },
   {
@@ -34,7 +34,7 @@ export const labCatalog: readonly LabEntry[] = [
     description:
       'A one-stake, one-reward pool built around cumulative reward-per-token accounting.',
     phase: 'Phase 1',
-    status: 'Registry pending',
+    status: 'Live',
     accent: 'blue',
   },
   {
@@ -46,7 +46,7 @@ export const labCatalog: readonly LabEntry[] = [
     description:
       'A minimal vault for inspecting share math, preview behavior, and donation resistance.',
     phase: 'Phase 1',
-    status: 'Registry pending',
+    status: 'Live',
     accent: 'teal',
   },
   {
@@ -58,7 +58,7 @@ export const labCatalog: readonly LabEntry[] = [
     description:
       'A versioned treasury that makes storage preservation visible across a V1 to V2 upgrade.',
     phase: 'Phase 1',
-    status: 'Registry pending',
+    status: 'Live',
     accent: 'steel',
   },
 ];

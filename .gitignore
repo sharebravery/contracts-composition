@@ -4,6 +4,7 @@ dist/
 coverage/
 out/
 .turbo/
+.venv/
 .env
 .env.*
 !.env.example
@@ -18,5 +19,6 @@ artifacts/
 broadcast/
 lib/
 foundry.toml.local
+foundry.lock
 test-results/
 playwright-report/

@@ -79,6 +79,7 @@ contract TreasuryV1 is Initializable, AccessControlUpgradeable, PausableUpgradea
 
         _checkRecipient(recipient);
         _consumeDailyLimit(amount);
+        // slither-disable-next-line arbitrary-send-eth: recipient is treasurer-controlled and allowlist-gated (V2)
         (bool success,) = recipient.call{value: amount}("");
         if (!success) revert ETHTransferFailed();
 
@@ -117,9 +118,13 @@ contract TreasuryV1 is Initializable, AccessControlUpgradeable, PausableUpgradea
         emit DailyLimitUpdated(previousLimit, newLimit);
     }
 
+    /// @dev Returns the ETH still payable in the current window. Lowering `dailyLimit`
+    /// below `spentToday` via `setDailyLimit` does not revert: the remainder is clamped
+    /// to zero so subsequent payments fail with `DailyLimitExceeded` until the window
+    /// rolls over, instead of underflowing and bricking the view.
     function remainingDailyLimit() public view returns (uint256) {
         if (block.timestamp >= dayStart + PAYMENT_WINDOW) return dailyLimit;
-        return dailyLimit - spentToday;
+        return _remaining(dailyLimit, spentToday);
     }
 
     function version() public pure virtual returns (uint256) {
@@ -132,9 +137,15 @@ contract TreasuryV1 is Initializable, AccessControlUpgradeable, PausableUpgradea
             spentToday = 0;
         }
 
-        uint256 remaining = dailyLimit - spentToday;
+        uint256 remaining = _remaining(dailyLimit, spentToday);
         if (amount > remaining) revert DailyLimitExceeded(amount, remaining);
         spentToday += amount;
+    }
+
+    /// @dev Underflow-safe remainder. When the limit has been lowered below what was
+    /// already spent in the window, the remainder is zero rather than reverting.
+    function _remaining(uint256 limit, uint256 spent) internal pure returns (uint256) {
+        return spent > limit ? 0 : limit - spent;
     }
 
     function _checkRecipient(address) internal view virtual {}

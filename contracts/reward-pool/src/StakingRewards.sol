@@ -57,10 +57,17 @@ contract StakingRewards is Ownable, Pausable, ReentrancyGuard {
     function stake(uint256 amount) external nonReentrant whenNotPaused updateReward(msg.sender) {
         if (amount == 0) revert ZeroAmount();
 
-        totalSupply += amount;
-        balanceOf[msg.sender] += amount;
+        // Credit the amount actually received so fee-on-transfer staking tokens cannot
+        // inflate `balanceOf`/`totalSupply` beyond real holdings (which would let a
+        // staker withdraw more than they deposited and drain the pool).
+        uint256 balanceBefore = stakingToken.balanceOf(address(this));
         stakingToken.safeTransferFrom(msg.sender, address(this), amount);
-        emit Staked(msg.sender, amount);
+        uint256 received = stakingToken.balanceOf(address(this)) - balanceBefore;
+        if (received == 0) revert ZeroAmount();
+
+        totalSupply += received;
+        balanceOf[msg.sender] += received;
+        emit Staked(msg.sender, received);
     }
 
     function withdraw(uint256 amount) external nonReentrant updateReward(msg.sender) {
@@ -94,7 +101,15 @@ contract StakingRewards is Ownable, Pausable, ReentrancyGuard {
         }
 
         if (nextRewardRate == 0) revert RewardRateZero();
-        if (nextRewardRate > rewardsToken.balanceOf(address(this)) / duration) {
+
+        // When the staking and reward tokens are the same, staked principal sits in the
+        // same balance as reward backing. Exclude `totalSupply` so principal is never
+        // counted as available reward funding (which would let claims drain deposits).
+        uint256 available = rewardsToken.balanceOf(address(this));
+        if (address(stakingToken) == address(rewardsToken)) {
+            available = available > totalSupply ? available - totalSupply : 0;
+        }
+        if (nextRewardRate > available / duration) {
             revert InsufficientRewardBalance();
         }
 

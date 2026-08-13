@@ -14,6 +14,7 @@
     "typecheck": "turbo run typecheck",
     "registry:validate": "tsx packages/contract-registry/scripts/validate.ts",
     "contracts:fmt": "forge fmt --root contracts/airdrop --check",
+    "contracts:install": "bash contracts/scripts/install-libs.sh",
     "contracts:build": "forge build --root contracts/airdrop",
     "contracts:test": "forge test --root contracts/airdrop",
     "contracts:reward-fmt": "forge fmt --root contracts/reward-pool --check",
@@ -25,7 +26,8 @@
     "contracts:treasury-fmt": "forge fmt --root contracts/treasury-lab --check",
     "contracts:treasury-build": "forge build --root contracts/treasury-lab",
     "contracts:treasury-test": "forge test --root contracts/treasury-lab",
-    "contracts:treasury-layout": "forge inspect TreasuryV1 storage-layout --root contracts/treasury-lab && forge inspect TreasuryV2 storage-layout --root contracts/treasury-lab"
+    "contracts:treasury-layout": "tsx contracts/treasury-lab/script/validate-storage-layout.ts",
+    "contracts:slither": "bash contracts/scripts/run-slither.sh"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",

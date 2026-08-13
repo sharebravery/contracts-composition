@@ -15,10 +15,13 @@ Delegated signatures bind the index, account, recipient, relayer, amount, curren
 ## Local verification
 
 ```bash
+pnpm contracts:install
 pnpm contracts:fmt
 pnpm contracts:build
 pnpm contracts:test
 ```
+
+`test/MerkleAirdropFuzz.t.sol` fuzzes valid/invalid leaves over random `(index, account, amount)`, bitmap boundaries (0, 255, 256, 511), claim/signature deadline boundaries, and signature binding/replay across index, amount, recipient, relayer, and nonce.
 
 ## Deployment inputs
 
