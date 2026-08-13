@@ -1,0 +1,7 @@
+{
+  "filter_paths": "lib|test|script|mock",
+  "detectors_to_exclude": "naming-convention,solc-version",
+  "exclude_informational": true,
+  "exclude_optimization": true,
+  "exclude_low": false
+}

@@ -36,6 +36,7 @@ Deployment metadata is stored in `packages/contract-registry/deployments/421614.
 
 ```bash
 pnpm install
+pnpm contracts:install   # fetch pinned Foundry libraries (forge-std, OpenZeppelin) into each lab
 cp .env.local.example .env.local
 pnpm dev
 ```
@@ -60,10 +61,22 @@ pnpm contracts:test
 pnpm contracts:reward-test
 pnpm contracts:vault-test
 pnpm contracts:treasury-test
-pnpm contracts:treasury-layout
+pnpm contracts:treasury-layout   # V1 -> V2 storage-compat prefix check (not just a layout print)
+pnpm contracts:slither           # Slither static analysis, fails on high-severity findings
 ```
 
 The browser tests read the verified testnet deployments and never sign or broadcast transactions.
+
+## Lab highlights
+
+| Lab | Demonstrates | Security boundary |
+| --- | --- | --- |
+| Airdrop | Merkle proofs, bitmap claims, EIP-712 relayed claims, nonces, deadlines | Single-round distribution; recovery locks until the deadline passes |
+| Reward Pool | Time-weighted reward-per-token accounting, rollover, pause | Credits actual received on stake (fee-on-transfer safe); excludes staked principal from reward backing when stake == reward token |
+| Vault | ERC-4626 deposit/mint/withdraw/redeem, previews, rounding | Six-decimal share offset resists donation/inflation; pause blocks only deposit/mint |
+| Treasury | UUPS proxy, roles, per-asset daily limits, allowlist, batch payments | ETH and each ERC-20 have independent rolling limits; lowering a limit below spent never bricks (clamped to zero) |
+
+The on-chain Treasury proxy currently runs V1; V2 (per-asset ERC-20 limits, allowlist, batch payments) is the upgrade target via `UpgradeTreasury` and is storage-compatible with V1 (validated by `pnpm contracts:treasury-layout`).
 
 ## License
 

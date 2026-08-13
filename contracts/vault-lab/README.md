@@ -13,10 +13,13 @@ This package implements a minimal ERC-4626 vault for Arbitrum Sepolia exercises.
 ## Local verification
 
 ```bash
+pnpm contracts:install
 forge fmt --root contracts/vault-lab --check
 forge build --root contracts/vault-lab
 forge test --root contracts/vault-lab
 ```
+
+`test/BasicVaultFuzz.t.sol` fuzzes preview/rounding consistency and donation/inflation behavior. `test/BasicVaultInvariant.t.sol` runs a handler-driven invariant suite asserting vault solvency, non-zero total supply, and ERC-4626 round-trip bounds across random deposit/mint/withdraw/redeem/donate sequences.
 
 ## Deployment
 
